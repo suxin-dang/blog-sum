@@ -6773,10 +6773,10 @@ div#archive {
   z-index: -3;
 }
 
-/* 头图隐藏 */
-#page-header {
+/* 头图隐藏 - 已注释以显示背景图 */
+/* #page-header {
   background: transparent !important;
-}
+} */
 /* 夜间模式页脚遮罩隐藏 */
 [data-theme="dark"] #footer::before {
   background: transparent !important;
@@ -6784,6 +6784,18 @@ div#archive {
 /* 夜间模式页脚头部遮罩隐藏 */
 [data-theme="dark"] #page-header::before {
   background: transparent !important;
+}
+
+/* 头像卡片背景图 */
+.card-info {
+  background: url('/assets/linbolikawaii.jpg') center center / cover no-repeat !important;
+}
+.card-info .author_top,
+.card-info .card-info-data,
+.card-info .card-info-social-icons {
+  background: rgba(255,255,255,0.75);
+  border-radius: 8px;
+  padding: 10px;
 }
 
 /* 阅读模式 */
