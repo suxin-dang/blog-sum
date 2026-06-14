@@ -9,7 +9,7 @@ description: 'Future is now 🍭🍭🍭'
 keywords: 'Keil,Arduino,Vscode,Java,代码,博客,Butterfly,Hexo,Sumcycle🥝,Sumcycle'
 author: Sumcycle🥝
 language: zh-CN
-timezone: 'Shanghai'
+timezone: Asia/Shanghai
 
 # abbrlink config
 abbrlink:
@@ -71,9 +71,24 @@ math:
    
   
 # 音乐插件
-aplayer: 
+aplayer:
   meting: true
   asset_inject: false
+  server: netease
+  type: playlist
+  id: "7452423867"
+  fixed: true
+  mini: true
+  autoplay: false
+  theme: "#b7daff"
+  loop: all
+  order: random
+  preload: auto
+  volume: 0.7
+  mutex: true
+  listFolded: true
+  listMaxHeight: 340px
+  lrcType: 0
                
                     
 

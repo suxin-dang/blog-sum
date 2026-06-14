@@ -1113,7 +1113,7 @@ function changeMouseMode() {
 var now1 = new Date();
 
 function createtime1() {
-  var grt = new Date("08/09/2022 00:00:00"); //此处修改你的建站时间或者网站上线时间
+  var grt = new Date("06/15/2026 00:00:00"); //此处修改你的建站时间或者网站上线时间
   now1.setTime(now1.getTime() + 250);
   var days = (now1 - grt) / 1000 / 60 / 60 / 24;
   var dnum = Math.floor(days);
@@ -2789,7 +2789,7 @@ function createtime() {
   var dis = Math.trunc(23400000000 + ((now - start) / 1000) * 17); // 距离=秒数*速度 记住转换毫秒
   var unit = (dis / 149600000).toFixed(6);  // 天文单位
   // 网站诞生时间
-  var grt = new Date("08/09/2022 00:00:00");
+  var grt = new Date("06/15/2026 00:00:00");
   var days = (now - grt) / 1e3 / 60 / 60 / 24,
     dnum = Math.floor(days),
     hours = (now - grt) / 1e3 / 60 / 60 - 24 * dnum,
@@ -2818,60 +2818,6 @@ setInterval(() => {
 
 //----------------------------------------------------------------
 
-
-/* fps检测 start */
-if (window.localStorage.getItem("fpson") == undefined || window.localStorage.getItem("fpson") == "1") {
-  var rAF = function () {
-    return (
-      window.requestAnimationFrame ||
-      window.webkitRequestAnimationFrame ||
-      function (callback) {
-        window.setTimeout(callback, 1000 / 60);
-      }
-    );
-  }();
-  var frame = 0;
-  var allFrameCount = 0;
-  var lastTime = Date.now();
-  var lastFameTime = Date.now();
-  var loop = function () {
-    var now = Date.now();
-    var fs = (now - lastFameTime);
-    var fps = Math.round(1000 / fs);
-
-    lastFameTime = now;
-    // 不置 0，在动画的开头及结尾记录此值的差值算出 FPS
-    allFrameCount++;
-    frame++;
-
-    if (now > 1000 + lastTime) {
-      var fps = Math.round((frame * 1000) / (now - lastTime));
-      if (fps <= 5) {
-        var kd = `<span style="color:#bd0000">卡成ppt🤢</span>`
-      } else if (fps <= 15) {
-        var kd = `<span style="color:red">电竞级帧率😖</span>`
-      } else if (fps <= 25) {
-        var kd = `<span style="color:orange">有点难受😨</span>`
-      } else if (fps < 35) {
-        var kd = `<span style="color:#9338e6">不太流畅🙄</span>`
-      } else if (fps <= 45) {
-        var kd = `<span style="color:#08b7e4">还不错哦😁</span>`
-      } else {
-        var kd = `<span style="color:#39c5bb">十分流畅🤣</span>`
-      }
-      document.getElementById("fps").innerHTML = `FPS:${fps} ${kd}`;
-      frame = 0;
-      lastTime = now;
-    };
-
-    rAF(loop);
-  }
-
-  loop();
-} else {
-  document.getElementById("fps").style = "display:none!important"
-}
-/* fps检测 end */
 
 //----------------------------------------------------------------
 
@@ -2907,7 +2853,7 @@ function clearItem() {
   localStorage.removeItem('blogbg');
   localStorage.removeItem('universe');
   localStorage.removeItem('blur');
-  localStorage.removeItem('fpson');
+
   localStorage.removeItem('transNum');
   localStorage.removeItem('blurRad');
   localStorage.removeItem('font');
@@ -3000,18 +2946,6 @@ function setSnow() {
 }
 
 
-// 帧率监测开关
-if (localStorage.getItem("fpson") == undefined) {
-  localStorage.setItem("fpson", "1");
-}
-function fpssw() {
-  if (document.getElementById("fpson").checked) {
-    localStorage.setItem("fpson", "1");
-  } else {
-    localStorage.setItem("fpson", "0");
-  }
-  setTimeout(reload, 600);
-}
 
 // 刷新窗口
 function reload() {
@@ -3369,8 +3303,7 @@ function createWinbox() {
 </div>
 
 <div class="content" style="display:flex">
-  <div class="content-text" style="font-weight:bold; padding-left:10px"> 帧率监测 (刷新生效) </div><input type="checkbox" id="fpson" onclick="fpssw()">
-  <div class="content-text" style="font-weight:bold; padding-left:10px"> 雪花特效 (白天模式) </div><input type="checkbox" id="snowSet" onclick="setSnow()">
+    <div class="content-text" style="font-weight:bold; padding-left:10px"> 雪花特效 (白天模式) </div><input type="checkbox" id="snowSet" onclick="setSnow()">
 </div>
 
 
@@ -3518,11 +3451,7 @@ function createWinbox() {
   } else if (localStorage.getItem("universe") == "none") {
     document.getElementById("universeSet").checked = false;
   }
-  if (localStorage.getItem("fpson") == "1") {
-    document.getElementById("fpson").checked = true;
-  } else {
-    document.getElementById("fpson").checked = false;
-  }
+
   if (localStorage.getItem("rs") == "block") {
     document.getElementById("rightSideSet").checked = true;
   } else if (localStorage.getItem("rs") == "none") {

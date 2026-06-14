@@ -47,44 +47,95 @@ html(lang=config.language data-theme=theme.display_mode class=htmlClassHideAside
 
     !=partial('includes/sidebar', {}, {cache: true})
 
-    if page.type !== '404'
-      #body-wrap(class=pageType)
-        include ./header/index.pug
+    #body-wrap(class=pageType)
+      include ./header/index.pug
 
-        main#content-inner.layout(class=hideAside)
-          if body
-            div!= body
-          else
-            block content
-            if theme.aside.enable && page.aside !== false
-              include widget/index.pug
+      main#content-inner.layout(class=hideAside)
+        if body
+          div!= body
+        else
+          block content
+          if theme.aside.enable && page.aside !== false
+            include widget/index.pug
 
-        - var footerBg = theme.footer_bg
-        
-        //- if (footerBg)
-        //-   if (footerBg === true)
-        //-     - var footer_bg = bg_img
-        //-   else
-        //-     - var footer_bg = theme.footer_bg.indexOf('/') !== -1 ? `background-image: url('${url_for(footerBg)}')` : `background: ${footerBg}`
-        //- else
-        //-   - var footer_bg = ''
-        if !is_post()
-          if (footerBg === true)
-            - var footer_bg = 'background-color: transparent;'
-          else
-            - var footer_bg = 'background-color: transparent;'
+      - var footerBg = theme.footer_bg
+      
+      //- if (footerBg)
+      //-   if (footerBg === true)
+      //-     - var footer_bg = bg_img
+      //-   else
+      //-     - var footer_bg = theme.footer_bg.indexOf('/') !== -1 ? `background-image: url('${url_for(footerBg)}')` : `background: ${footerBg}`
+      //- else
+      //-   - var footer_bg = ''
+      if !is_post()
+        if (footerBg === true)
+          - var footer_bg = 'background-color: transparent;'
         else
           - var footer_bg = 'background-color: transparent;'
+      else
+        - var footer_bg = 'background-color: transparent;'
 
 
 
-        footer#footer(style=footer_bg)
-          !=partial('includes/footer', {}, {cache: true})
+      footer#footer(style=footer_bg)
+        !=partial('includes/footer', {}, {cache: true})
 
-    else
+    if page.type === '404'
       include ./404.pug
 
     include ./rightside.pug
     !=partial('includes/third-party/search/index', {}, {cache: true})
     !=partial('includes/rightmenu',{}, {cache:true})
     include ./additional-js.pug
+
+    //- 本地音乐播放器 (左下角，点击右侧按钮折叠/展开)
+    if theme.aplayerInject && theme.aplayerInject.enable
+      #aplayer(style="position:fixed;bottom:0;left:0;z-index:9999;")
+      script.
+        document.addEventListener('DOMContentLoaded', function () {
+          var ap = new APlayer({
+            container: document.getElementById('aplayer'),
+            fixed: true,
+            mini: true,
+            autoplay: false,
+            theme: '#b7daff',
+            loop: 'all',
+            order: 'random',
+            preload: 'auto',
+            volume: 0.7,
+            mutex: true,
+            listFolded: false,
+            listMaxHeight: 340,
+            audio: [
+              { name: 'U&I', artist: '放課後ティータイム', url: '/music/U&I.m4a', cover: '/assets/limulu01.jpg' },
+              { name: '天使にふれたよ!', artist: '放課後ティータイム', url: '/music/天使にふれたよ!.m4a', cover: '/assets/limulu01.jpg' },
+              { name: '归期', artist: '钱润玉', url: '/music/归期.m4a', cover: '/assets/limulu01.jpg' },
+              { name: '江湖入怀', artist: '括号君', url: '/music/江湖入怀.m4a', cover: '/assets/limulu01.jpg' },
+              { name: '长夜杯空', artist: '说说Crystal', url: '/music/长夜杯空.m4a', cover: '/assets/limulu01.jpg' },
+              { name: '马步谣', artist: '双笙（陈元汐）', url: '/music/马步谣.m4a', cover: '/assets/limulu01.jpg' }
+            ]
+          });
+        });
+
+    //- 首页背景轮播图
+    if is_home()
+      script.
+        (function () {
+          var bgImages = [
+            '/assets/aogusitakawaii.jpg',
+            '/assets/daniyakawaii.jpg',
+            '/assets/feibikawaii.jpg',
+            '/assets/moningkawaii.jpg',
+            '/assets/qianxiaokawaii.jpg',
+            '/assets/xxigelikakawaii.jpg'
+          ];
+          var index = 0;
+          var header = document.getElementById('page-header');
+          if (header) {
+            header.style.transition = 'background-image 1s ease-in-out';
+            setInterval(function () {
+              index = (index + 1) % bgImages.length;
+              header.style.backgroundImage = "url('" + bgImages[index] + "')";
+            }, 5000);
+          }
+        })();
